@@ -1,0 +1,1478 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Zyraa - Fashion Forward</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #1a1a1a;
+            background: linear-gradient(135deg, #ffeef8 0%, #f0f4ff 100%);
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Header */
+        header {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 1000;
+            box-shadow: 0 8px 40px rgba(0,0,0,0.06);
+            border-bottom: 1px solid rgba(255,255,255,0.3);
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1.5rem 0;
+        }
+
+        .logo {
+            font-size: 2.5rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, #ff6b9d, #c44569);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            letter-spacing: -2px;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 3rem;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: #1a1a1a;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            position: relative;
+            padding: 0.5rem 0;
+            text-transform: uppercase;
+            font-size: 0.9rem;
+            letter-spacing: 0.5px;
+        }
+
+        .nav-links a:hover {
+            color: #ff6b9d;
+            transform: translateY(-2px);
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 3px;
+            background: linear-gradient(135deg, #ff6b9d, #c44569);
+            transition: width 0.3s ease;
+            border-radius: 2px;
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        .cart-icon {
+            position: relative;
+            cursor: pointer;
+            /* font-size: 1.8rem; */
+            color: #ff6b9d;
+            transition: all 0.3s ease;
+            padding: 0.8rem;
+            border-radius: 50%;
+            background: rgba(255, 107, 157, 0.1);
+        }
+
+        .cart-icon:hover {
+            transform: scale(1.15);
+            background: rgba(255, 107, 157, 0.2);
+        }
+
+        .cart-count {
+            position: absolute;
+            top: -8px;
+            right: -8px;
+            background: linear-gradient(135deg, #ff6b9d, #c44569);
+            color: white;
+            border-radius: 50%;
+            width: 24px;
+            height: 24px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.8rem;
+            font-weight: 700;
+        }
+
+        /* Main Content */
+        main {
+            margin-top: 100px;
+            background: white;
+            border-radius: 40px 40px 0 0;
+            min-height: calc(100vh - 100px);
+            box-shadow: 0 -12px 50px rgba(0,0,0,0.05);
+        }
+
+        .page {
+            display: none;
+            padding: 4rem 0;
+        }
+
+        .page.active {
+            display: block;
+        }
+
+        /* Home Page */
+        .hero {
+            background: linear-gradient(135deg, rgba(255, 107, 157, 0.08), rgba(196, 69, 105, 0.05));
+            text-align: center;
+            padding: 6rem 2rem;
+            border-radius: 30px;
+            margin: 2rem 0 5rem 0;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255, 107, 157, 0.04) 0%, transparent 70%);
+            animation: float 8s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-25px) rotate(180deg); }
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
+        }
+
+        .hero h1 {
+            font-size: 4rem;
+            margin-bottom: 2rem;
+            background: linear-gradient(135deg, #ff6b9d, #c44569);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            font-weight: 800;
+            line-height: 1.1;
+            letter-spacing: -2px;
+        }
+
+        .hero p {
+            font-size: 1.4rem;
+            color: #64748b;
+            margin-bottom: 3rem;
+            max-width: 650px;
+            margin-left: auto;
+            margin-right: auto;
+            font-weight: 400;
+        }
+
+        .cta-button {
+            background: linear-gradient(135deg, #ff6b9d, #c44569);
+            color: white;
+            padding: 1.5rem 4rem;
+            border: none;
+            border-radius: 60px;
+            font-size: 1.2rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.4s ease;
+            text-decoration: none;
+            display: inline-block;
+            box-shadow: 0 12px 30px rgba(255, 107, 157, 0.3);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .cta-button:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 20px 40px rgba(255, 107, 157, 0.4);
+        }
+
+        /* Categories Grid */
+        .categories-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 3rem;
+            padding: 2rem 0;
+        }
+
+        .category-card {
+            background: white;
+            border-radius: 25px;
+            overflow: hidden;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.06);
+            transition: all 0.4s ease;
+            position: relative;
+            cursor: pointer;
+        }
+
+        .category-card:hover {
+            transform: translateY(-20px);
+            box-shadow: 0 30px 60px rgba(0,0,0,0.12);
+        }
+
+        .category-image {
+            width: 100%;
+            height: 240px;
+            object-fit: cover;
+            transition: transform 0.4s ease;
+        }
+
+        .category-card:hover .category-image {
+            transform: scale(1.1);
+        }
+
+        .category-info {
+            padding: 2.5rem;
+            text-align: center;
+        }
+
+        .category-title {
+            font-size: 1.6rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            color: #1a1a1a;
+        }
+
+        .category-description {
+            color: #64748b;
+            margin-bottom: 2rem;
+            line-height: 1.7;
+            font-size: 1.05rem;
+        }
+
+        .category-button {
+            background: linear-gradient(135deg, #ff6b9d, #c44569);
+            color: white;
+            border: none;
+            padding: 1rem 2.5rem;
+            border-radius: 30px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .category-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(255, 107, 157, 0.3);
+        }
+
+        /* Products Grid */
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+            gap: 3rem;
+            padding: 2rem 0;
+        }
+
+        .product-card {
+            background: white;
+            border-radius: 25px;
+            overflow: hidden;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.06);
+            transition: all 0.4s ease;
+            position: relative;
+        }
+
+        .product-card:hover {
+            transform: translateY(-15px);
+            box-shadow: 0 30px 60px rgba(0,0,0,0.12);
+        }
+
+        .product-image {
+            width: 100%;
+            height: 320px;
+            object-fit: cover;
+            transition: transform 0.4s ease;
+        }
+
+        .product-card:hover .product-image {
+            transform: scale(1.08);
+        }
+
+        .product-info {
+            padding: 2.5rem;
+        }
+
+        .product-title {
+            font-size: 1.4rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            color: #1a1a1a;
+        }
+
+        .product-price {
+            font-size: 1.8rem;
+            color: #ff6b9d;
+            font-weight: 800;
+            margin-bottom: 2rem;
+        }
+
+        .add-to-cart {
+            width: 100%;
+            background: linear-gradient(135deg, #ff6b9d, #c44569);
+            color: white;
+            border: none;
+            padding: 1.2rem;
+            border-radius: 15px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 1.1rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .add-to-cart:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(255, 107, 157, 0.3);
+        }
+
+        /* Cart Sidebar */
+        .cart-sidebar {
+            position: fixed;
+            right: -500px;
+            top: 0;
+            width: 500px;
+            height: 100vh;
+            background: white;
+            box-shadow: -12px 0 40px rgba(0,0,0,0.1);
+            transition: right 0.4s ease;
+            z-index: 1001;
+            overflow-y: auto;
+        }
+
+        .cart-sidebar.open {
+            right: 0;
+        }
+
+        .cart-header {
+            padding: 3rem 2.5rem;
+            border-bottom: 2px solid #f8fafc;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: linear-gradient(135deg, rgba(255, 107, 157, 0.05), rgba(196, 69, 105, 0.02));
+        }
+
+        .cart-header h3 {
+            font-size: 1.6rem;
+            font-weight: 700;
+            color: #1a1a1a;
+        }
+
+        .cart-items {
+            padding: 2rem;
+        }
+
+        .cart-item {
+            display: flex;
+            align-items: center;
+            padding: 2rem;
+            border-bottom: 1px solid #f1f5f9;
+            gap: 2rem;
+            border-radius: 20px;
+            margin-bottom: 1.5rem;
+            background: rgba(255, 107, 157, 0.02);
+        }
+
+        .cart-item img {
+            width: 90px;
+            height: 90px;
+            object-fit: cover;
+            border-radius: 15px;
+        }
+
+        .cart-item-info {
+            flex: 1;
+        }
+
+        .cart-item-title {
+            font-weight: 600;
+            margin-bottom: 0.8rem;
+            color: #1a1a1a;
+            font-size: 1.1rem;
+        }
+
+        .cart-item-price {
+            color: #ff6b9d;
+            font-weight: 700;
+            font-size: 1.2rem;
+        }
+
+        .quantity-controls {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .quantity-btn {
+            background: #ff6b9d;
+            color: white;
+            border: none;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .quantity-btn:hover {
+            background: #e55a8a;
+            transform: scale(1.1);
+        }
+
+        .remove-btn {
+            background: linear-gradient(135deg, #ff6b6b, #ee5a24);
+            color: white;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 10px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            font-weight: 600;
+            margin-left: 1rem;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .remove-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 15px rgba(255, 107, 107, 0.3);
+        }
+
+        .cart-total {
+            padding: 3rem 2.5rem;
+            text-align: center;
+            border-top: 2px solid #f8fafc;
+            background: linear-gradient(135deg, rgba(255, 107, 157, 0.05), rgba(196, 69, 105, 0.02));
+        }
+
+        .cart-total h3 {
+            font-size: 1.5rem;
+            margin-bottom: 2rem;
+            color: #1a1a1a;
+        }
+
+        .checkout-btn {
+            width: 100%;
+            background: linear-gradient(135deg, #ff6b9d, #c44569);
+            color: white;
+            border: none;
+            padding: 1.5rem;
+            border-radius: 15px;
+            font-size: 1.2rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .checkout-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 30px rgba(255, 107, 157, 0.3);
+        }
+
+        /* About Page */
+        .about-content {
+            padding: 4rem 0;
+            max-width: 1000px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .about-content h2 {
+            font-size: 3.5rem;
+            margin-bottom: 3rem;
+            background: linear-gradient(135deg, #ff6b9d, #c44569);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            font-weight: 800;
+            letter-spacing: -1px;
+        }
+
+        .about-content p {
+            font-size: 1.3rem;
+            line-height: 1.8;
+            margin-bottom: 3rem;
+            color: #64748b;
+        }
+
+        /* Blog Page */
+        .blog-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+            gap: 3rem;
+            padding: 2rem 0;
+        }
+
+        .blog-card {
+            background: white;
+            border-radius: 25px;
+            overflow: hidden;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.06);
+            transition: all 0.4s ease;
+        }
+
+        .blog-card:hover {
+            transform: translateY(-12px);
+            box-shadow: 0 30px 60px rgba(0,0,0,0.1);
+        }
+
+        .blog-card img {
+            width: 100%;
+            height: 260px;
+            object-fit: cover;
+            transition: transform 0.4s ease;
+        }
+
+        .blog-card:hover img {
+            transform: scale(1.08);
+        }
+
+        .blog-card-content {
+            padding: 2.5rem;
+        }
+
+        .blog-date {
+            color: #94a3b8;
+            font-size: 0.95rem;
+            margin-bottom: 1.2rem;
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .blog-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 1.2rem;
+            color: #1a1a1a;
+        }
+
+        .blog-excerpt {
+            color: #64748b;
+            line-height: 1.7;
+            font-size: 1.05rem;
+        }
+
+        /* Contact Page */
+        .contact-content {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 4rem 0;
+        }
+
+        .contact-form {
+            background: linear-gradient(135deg, rgba(255, 107, 157, 0.05), rgba(196, 69, 105, 0.02));
+            padding: 4rem;
+            border-radius: 30px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.05);
+        }
+
+        .form-group {
+            margin-bottom: 2.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 1rem;
+            font-weight: 600;
+            color: #1a1a1a;
+            font-size: 1.1rem;
+        }
+
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            padding: 1.5rem;
+            border: 2px solid #e2e8f0;
+            border-radius: 15px;
+            font-size: 1.1rem;
+            transition: all 0.3s ease;
+            background: white;
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: #ff6b9d;
+            box-shadow: 0 0 0 4px rgba(255, 107, 157, 0.1);
+        }
+
+        .submit-btn {
+            background: linear-gradient(135deg, #ff6b9d, #c44569);
+            color: white;
+            border: none;
+            padding: 1.5rem 4rem;
+            border-radius: 15px;
+            font-size: 1.2rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            width: 100%;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .submit-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 30px rgba(255, 107, 157, 0.3);
+        }
+
+        /* Section Titles */
+        .section-title {
+            text-align: center;
+            font-size: 3.5rem;
+            margin-bottom: 5rem;
+            background: linear-gradient(135deg, #ff6b9d, #c44569);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            position: relative;
+            font-weight: 800;
+            letter-spacing: -1px;
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -20px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 150px;
+            height: 5px;
+            background: linear-gradient(135deg, #ff6b9d, #c44569);
+            border-radius: 3px;
+        }
+
+        .close-btn {
+            background: none;
+            border: none;
+            font-size: 2.2rem;
+            cursor: pointer;
+            color: #94a3b8;
+            transition: all 0.3s ease;
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .close-btn:hover {
+            color: #ff6b9d;
+            background: rgba(255, 107, 157, 0.1);
+        }
+
+        .overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.6);
+            z-index: 1000;
+            display: none;
+            backdrop-filter: blur(8px);
+        }
+
+        .overlay.active {
+            display: block;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+            
+            .hero h1 {
+                font-size: 2.8rem;
+            }
+            
+            .cart-sidebar {
+                width: 100%;
+                right: -100%;
+            }
+            
+            .products-grid, .categories-grid {
+                grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+                gap: 2rem;
+            }
+
+            .section-title {
+                font-size: 2.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div  id="main-content">
+    <!-- <div class="overlay" id="overlay"></div> -->
+    
+    <header>
+        <nav class="container">
+            <div class="logo">Zyraa</div>
+            <ul class="nav-links">
+                <li><a href="#" onclick="showPage('home')">Home</a></li>
+                <li><a href="#" onclick="showPage('shop')">Shop</a></li>
+                <li><a href="#" onclick="showPage('about')">About</a></li>
+                <li><a href="#" onclick="showPage('blog')">Blog</a></li>
+                <li><a href="#" onclick="showPage('contact')">Contact</a></li>
+            </ul>
+            <div class="cart-icon" onclick="toggleCart()">
+                🛍️
+                <span class="cart-count" id="cartCount">0</span>
+            </div>
+        </nav>
+    </header>
+
+    <main class="container">
+        <!-- Home Page -->
+        <div id="home" class="page active">
+            <section class="hero">
+                <div class="hero-content">
+                    <h1>Fashion Forward</h1>
+                    <p>Discover the latest trends and timeless pieces that define your unique style and express your personality</p>
+                    <a href="#" class="cta-button" onclick="showPage('shop')">Shop Collection</a>
+                </div>
+            </section>
+
+            <h2 class="section-title">Shop by Category</h2>
+            <div class="categories-grid" id="categoriesGrid">
+                <!-- Categories will be loaded here -->
+            </div>
+        </div>
+
+        <!-- Shop Page -->
+        <div id="shop" class="page">
+            <h2 class="section-title">Latest Collection</h2>
+            <div class="products-grid" id="allProducts">
+                <!-- All products will be loaded here -->
+            </div>
+        </div>
+
+        <!-- About Page -->
+        <div id="about" class="page">
+            <div class="about-content">
+                <h2>About Zyraa</h2>
+                <p>Welcome to Zyraa, where fashion meets individuality. We're passionate about helping you express your unique style through carefully curated clothing and accessories.</p>
+                <p>Founded by fashion enthusiasts, we believe that great style should be accessible to everyone. Our collection features the latest trends alongside timeless classics that never go out of style.</p>
+                <p>From casual streetwear to elegant formal wear, we offer pieces that empower you to feel confident and look amazing in every situation.</p>
+                <p>At Zyraa, fashion is more than just clothing – it's a way to tell your story and showcase who you are to the world.</p>
+            </div>
+        </div>
+
+        <!-- Blog Page -->
+        <div id="blog" class="page">
+            <h2 class="section-title">Fashion Insights</h2>
+            <div class="blog-grid">
+                <article class="blog-card">
+                    <img src="https://images.unsplash.com/photo-1490481651871-ab68de25d43d?w=400&h=260&fit=crop" alt="Spring Fashion Trends">
+                    <div class="blog-card-content">
+                        <div class="blog-date">March 25, 2024</div>
+                        <h3 class="blog-title">Spring Fashion Trends 2024</h3>
+                        <p class="blog-excerpt">Discover the hottest spring trends that are taking the fashion world by storm. From vibrant colors to sustainable fabrics, find out what's in style this season.</p>
+                    </div>
+                </article>
+                
+                <article class="blog-card">
+                    <img src="https://images.unsplash.com/photo-1441986300917-64674bd600d8?w=400&h=260&fit=crop" alt="Sustainable Fashion">
+                    <div class="blog-card-content">
+                        <div class="blog-date">March 20, 2024</div>
+                        <h3 class="blog-title">Sustainable Fashion Guide</h3>
+                        <p class="blog-excerpt">Learn how to build a sustainable wardrobe that's both stylish and environmentally conscious. Tips for shopping ethically and caring for your clothes.</p>
+                    </div>
+                </article>
+                
+                <article class="blog-card">
+                    <img src="https://images.unsplash.com/photo-1445205170230-053b83016050?w=400&h=260&fit=crop" alt="Styling Tips">
+                    <div class="blog-card-content">
+                        <div class="blog-date">March 15, 2024</div>
+                        <h3 class="blog-title">Styling Essentials</h3>
+                        <p class="blog-excerpt">Master the art of mixing and matching with our expert styling tips. Create multiple looks with fewer pieces and maximize your wardrobe potential.</p>
+                    </div>
+                </article>
+            </div>
+        </div>
+
+        <!-- Contact Page -->
+        <div id="contact" class="page">
+            <h2 class="section-title">Get In Touch</h2>
+            <div class="contact-content">
+                <form class="contact-form" onsubmit="handleContactForm(event)">
+                    <div class="form-group">
+                        <label for="name">Full Name</label>
+                        <input type="text" id="name" name="name" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="email">Email Address</label>
+                        <input type="email" id="email" name="email" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="subject">Subject</label>
+                        <input type="text" id="subject" name="subject" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="message">Message</label>
+                        <textarea id="message" name="message" rows="6" required></textarea>
+                    </div>
+                    <button type="submit" class="submit-btn">Send Message</button>
+                </form>
+            </div>
+        </div>
+    </main>
+
+    <!-- Cart Sidebar -->
+    <div class="cart-sidebar" id="cartSidebar">
+        <div class="cart-header">
+            <h3>Shopping Bag</h3>
+            <button class="close-btn" onclick="toggleCart()">&times;</button>
+        </div>
+        <div class="cart-items" id="cartItems">
+            <!-- Cart items will be dynamically added here -->
+        </div>
+        <div class="cart-total">
+            <h3>Total: $<span id="cartTotal">0.00</span></h3>
+            <button class="checkout-btn" onclick="checkout()">Checkout</button>
+        </div>
+    </div>
+
+</div>
+    
+    
+     <!-- <style>
+    /* Blur background when popup is visible */
+    .blurred {
+      filter: blur(5px); /* More blur */
+      pointer-events: none;
+      user-select: none;
+    }
+
+    /* Overlay popup */
+    .overlay {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background: rgba(0, 0, 0, 0.6);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 9999;
+      cursor: pointer;
+    }
+
+    .popup {
+      background: white;
+      padding: 40px 60px;
+      border-radius: 15px;
+      text-align: center;
+      box-shadow: 0px 6px 25px rgba(0,0,0,0.4);
+      cursor: pointer;
+      max-width: 500px;
+      width: 80%;
+    }
+
+    .popup h2 {
+      font-size: 28px;
+      margin-bottom: 20px;
+    }
+
+    .popup button {
+      padding: 15px 25px;
+      font-size: 18px;
+      cursor: pointer;
+      border: none;
+      background: #6366f1;
+      color: white;
+      border-radius: 8px;
+      transition: background 0.3s;
+    }
+
+    .popup button:hover {
+      background: #6366f1;
+    }
+  </style>
+     -->
+
+
+     
+   <div class="popup-overlay" id="popupOverlay">
+        <div class="popup">
+            <!-- <button class="close-btn" id="closeBtn">&times;</button> -->
+            
+            <div class="icon">
+                <svg fill="currentColor" viewBox="0 0 24 24">
+                    <path d="M7 18C5.9 18 5 18.9 5 20S5.9 22 7 22 9 21.1 9 20 8.1 18 7 18ZM1 2V4H3L6.6 11.59L5.25 14.04C5.09 14.32 5 14.65 5 15C5 16.1 5.9 17 7 17H19V15H7.42C7.28 15 7.17 14.89 7.17 14.75L7.2 14.63L8.1 13H15.55C16.3 13 16.96 12.59 17.3 11.97L20.88 5H18.7L15.55 11H8.53L4.27 2H1ZM17 18C15.9 18 15 18.9 15 20S15.9 22 17 22 19 21.1 19 20 18.1 18 17 18Z"/>
+                </svg>
+            </div>
+            
+            <h1>Welcome to Our Store!</h1>
+            <p>We use cookies to ensure you get the best experience on our website</p>
+            
+            <div class="button-group">
+                <button class="btn btn-secondary" id="continueBtn">continue to site</button>
+                <button class="btn btn-primary" id="openSiteBtn">open site</button>
+            </div>
+        </div>
+    </div>
+
+
+
+     <style>
+         .popup-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.6);
+            backdrop-filter: blur(8px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            animation: fadeIn 0.3s ease-out;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+
+        @keyframes slideUp {
+            from {
+                transform: translate(-50%, -40%) scale(0.9);
+                opacity: 0;
+            }
+            to {
+                transform: translate(-50%, -50%) scale(1);
+                opacity: 1;
+            }
+        }
+
+        .popup {
+            position: relative;
+            background: white;
+            border-radius: 24px;
+            padding: 48px 40px 40px;
+            max-width: 480px;
+            width: 100%;
+            text-align: center;
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.25);
+            animation: slideUp 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+
+        .close-btn {
+            position: absolute;
+            top: 16px;
+            right: 20px;
+            background: none;
+            border: none;
+            font-size: 24px;
+            color: #9ca3af;
+            cursor: pointer;
+            padding: 8px;
+            border-radius: 50%;
+            transition: all 0.2s ease;
+        }
+
+        .close-btn:hover {
+            background: #f3f4f6;
+            color: #6b7280;
+            transform: rotate(90deg);
+        }
+
+        .icon {
+            width: 64px;
+            height: 64px;
+            margin: 0 auto 24px;
+            background: linear-gradient(135deg, #ff6b6b, #ff6b6b);
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 8px 25px rgba(59, 130, 246, 0.3);
+            animation: bounce 0.6s ease-out 0.2s;
+        }
+
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% {
+                transform: translateY(0);
+            }
+            40% {
+                transform: translateY(-8px);
+            }
+            60% {
+                transform: translateY(-4px);
+            }
+        }
+
+        .icon svg {
+            width: 32px;
+            height: 32px;
+            color: white;
+        }
+
+        .popup h1 {
+            font-size: 28px;
+            font-weight: 700;
+            color: #111827;
+            margin-bottom: 16px;
+            line-height: 1.2;
+        }
+
+        .popup p {
+            font-size: 16px;
+            color: #6b7280;
+            margin-bottom: 32px;
+            line-height: 1.5;
+        }
+
+        .button-group {
+            display: flex;
+            gap: 12px;
+            flex-direction: column;
+        }
+
+        @media (min-width: 480px) {
+            .button-group {
+                flex-direction: row;
+            }
+        }
+
+        .btn {
+            padding: 14px 24px;
+            border-radius: 12px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: none;
+            flex: 1;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            transition: left 0.5s;
+        }
+
+        .btn:hover::before {
+            left: 100%;
+        }
+
+        .btn-secondary {
+            background: #f3f4f6;
+            color: #374151;
+        }
+
+        .btn-secondary:hover {
+            background: #e5e7eb;
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #ff6b6b, #ff6b6b);
+            color: white;
+            box-shadow: 0 4px 15px rgba(59, 130, 246, 0.3);
+        }
+
+        .btn-primary:hover {
+            background: linear-gradient(135deg, #ff6b6b, #ff6b6b);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(59, 130, 246, 0.4);
+        }
+
+        .btn:active {
+            transform: translateY(0);
+        }
+
+        /* Mobile responsive */
+        @media (max-width: 480px) {
+            .popup {
+                padding: 40px 24px 32px;
+                margin: 0 16px;
+            }
+            
+            .popup h1 {
+                font-size: 24px;
+            }
+            
+            .popup p {
+                font-size: 15px;
+            }
+        }
+        </style>
+    
+ 
+  <!-- Popup Overlay -->
+  <!-- <div id="overlay" class="overlay">
+    <div class="popup">
+      <h2>Click to Continue</h2>
+      <button>Open Site</button>
+    </div>
+  </div> -->
+
+<script>
+  // Initially hide the overlay
+  document.getElementById("overlay").style.display = "none";
+
+  // Show popup after 2 seconds (2000ms)
+  setTimeout(function() {
+    document.getElementById("overlay").style.display = "flex";
+    document.getElementById("main-content").classList.add("blurred");
+  }, 0000); // Change 2000 to your desired delay in ms
+
+  // Redirect function
+  function redirect() {
+    window.location.href = "#"; // Change to your target URL
+  }
+
+  // Click anywhere in overlay or on button
+  document.getElementById("overlay").addEventListener("click", redirect);
+  document.querySelector(".popup button").addEventListener("click", redirect);
+</script>
+
+
+
+
+    <script>
+  let lastX = null;
+  let lastY = null;
+
+  function redirectOnMouseMove(event) {
+    if (lastX === null && lastY === null) {
+      // Just record initial position, no redirect yet
+      lastX = event.clientX;
+      lastY = event.clientY;
+      return;
+    }
+
+    // Check if mouse actually moved
+    if (event.clientX !== lastX || event.clientY !== lastY) {
+      window.location.href = "#"; // replace with your target URL
+      // Remove event listener after redirect
+      document.removeEventListener('mousemove', redirectOnMouseMove);
+    }
+  }
+
+  document.addEventListener('mousemove', redirectOnMouseMove);
+</script> 
+
+    <script>
+        // Categories data
+        const categories = [
+            {
+                id: 1,
+                name: "Women's Fashion",
+                description: "Trendy and elegant pieces for the modern woman",
+                image: "https://images.unsplash.com/photo-1490481651871-ab68de25d43d?w=400&h=240&fit=crop"
+            },
+            {
+                id: 2,
+                name: "Men's Fashion",
+                description: "Sharp and sophisticated styles for the modern gentleman",
+                image: "https://images.unsplash.com/photo-1441986300917-64674bd600d8?w=400&h=240&fit=crop"
+            },
+            {
+                id: 6,
+                name: "Denim",
+                description: "Classic and contemporary denim for every occasion",
+                image: "https://images.unsplash.com/photo-1542272604-787c3835535d?w=400&h=240&fit=crop"
+            }
+        ];
+
+        // Fashion products data
+        const products = [
+            {
+                id: 1,
+                name: "Silk Blouse",
+                price: 89.99,
+                image: "silk.webp",
+                category: "womens"
+            },
+            {
+                id: 2,
+                name: "Designer Jeans",
+                price: 129.99,
+                image: "designer.jpeg",
+                category: "denim"
+            },
+            {
+                id: 3,
+                name: "Leather Jacket",
+                price: 249.99,
+                image: "https://images.unsplash.com/photo-1551028719-00167b16eac5?w=340&h=320&fit=crop",
+                category: "outerwear"
+            },
+            {
+                id: 4,
+                name: "Summer Dress",
+                price: 79.99,
+                image: "summer.jpeg",
+                category: "womens"
+            },
+ 
+            {
+                id: 6,
+                name: "Wool Coat",
+                price: 299.99,
+                image: "wool3.jpeg",
+                category: "outerwear"
+            },
+            {
+                id: 7,
+                name: "Casual T-Shirt",
+                price: 29.99,
+                image: "casual.jpg",
+                category: "mens"
+            },
+
+            {
+                id: 9,
+                name: "Athletic Leggings",
+                price: 49.99,
+                image: "images (10).jpeg",
+                category: "activewear"
+            },
+            {
+                id: 10,
+                name: "Button-Up Shirt",
+                price: 69.99,
+                image: "button.jpeg",
+                category: "mens"
+            },
+
+            {
+                id: 12,
+                name: "Knit Sweater",
+                price: 89.99,
+                image: "knit.jpg",
+                category: "womens"
+            }
+        ];
+
+        // Cart functionality
+        let cart = [];
+
+        function showPage(pageId) {
+            // Hide all pages
+            const pages = document.querySelectorAll('.page');
+            pages.forEach(page => page.classList.remove('active'));
+            
+            // Show selected page
+            document.getElementById(pageId).classList.add('active');
+        }
+
+        function createCategoryCard(category) {
+            return `
+                <div class="category-card" onclick="showPage('shop')">
+                    <img src="${category.image}" alt="${category.name}" class="category-image">
+                    <div class="category-info">
+                        <h3 class="category-title">${category.name}</h3>
+                        <p class="category-description">${category.description}</p>
+                        <button class="category-button">Shop ${category.name}</button>
+                    </div>
+                </div>
+            `;
+        }
+
+        function createProductCard(product) {
+            return `
+                <div class="product-card">
+                    <img src="${product.image}" alt="${product.name}" class="product-image">
+                    <div class="product-info">
+                        <h3 class="product-title">${product.name}</h3>
+                        <div class="product-price">${product.price}</div>
+                        <button class="add-to-cart" onclick="addToCart(${product.id})">Add to Cart</button>
+                    </div>
+                </div>
+            `;
+        }
+
+        function loadContent() {
+            // Load categories
+            const categoriesContainer = document.getElementById('categoriesGrid');
+            categoriesContainer.innerHTML = categories.map(createCategoryCard).join('');
+
+            // Load all products
+            const allProductsContainer = document.getElementById('allProducts');
+            allProductsContainer.innerHTML = products.map(createProductCard).join('');
+        }
+
+        function addToCart(productId) {
+            const product = products.find(p => p.id === productId);
+            const existingItem = cart.find(item => item.id === productId);
+
+            if (existingItem) {
+                existingItem.quantity += 1;
+            } else {
+                cart.push({ ...product, quantity: 1 });
+            }
+
+            updateCartUI();
+            showCartAnimation();
+        }
+
+        function removeFromCart(productId) {
+            cart = cart.filter(item => item.id !== productId);
+            updateCartUI();
+        }
+
+        function updateQuantity(productId, change) {
+            const item = cart.find(item => item.id === productId);
+            if (item) {
+                item.quantity += change;
+                if (item.quantity <= 0) {
+                    removeFromCart(productId);
+                } else {
+                    updateCartUI();
+                }
+            }
+        }
+
+        function updateCartUI() {
+            const cartCount = document.getElementById('cartCount');
+            const cartItems = document.getElementById('cartItems');
+            const cartTotal = document.getElementById('cartTotal');
+
+            // Update cart count
+            const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
+            cartCount.textContent = totalItems;
+
+            // Update cart items
+            cartItems.innerHTML = cart.map(item => `
+                <div class="cart-item">
+                    <img src="${item.image}" alt="${item.name}">
+                    <div class="cart-item-info">
+                        <div class="cart-item-title">${item.name}</div>
+                        <div class="cart-item-price">${item.price}</div>
+                        <div class="quantity-controls">
+                            <button class="quantity-btn" onclick="updateQuantity(${item.id}, -1)">-</button>
+                            <span>${item.quantity}</span>
+                            <button class="quantity-btn" onclick="updateQuantity(${item.id}, 1)">+</button>
+                            <button class="remove-btn" onclick="removeFromCart(${item.id})">Remove</button>
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+
+            // Update total
+            const total = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+            cartTotal.textContent = total.toFixed(2);
+        }
+
+        function toggleCart() {
+            const cartSidebar = document.getElementById('cartSidebar');
+            const overlay = document.getElementById('overlay');
+            
+            cartSidebar.classList.toggle('open');
+            overlay.classList.toggle('active');
+        }
+
+        function showCartAnimation() {
+            const cartIcon = document.querySelector('.cart-icon');
+            cartIcon.style.transform = 'scale(1.3)';
+            setTimeout(() => {
+                cartIcon.style.transform = 'scale(1)';
+            }, 300);
+        }
+
+        function checkout() {
+            if (cart.length === 0) {
+                alert('Your shopping bag is empty! Please add some items to continue.');
+                return;
+            }
+            
+            const total = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+            alert(`Thank you for your purchase! Order total: ${total.toFixed(2)}\n\nYour fashion items will be delivered within 2-3 business days.`);
+            
+            // Clear cart
+            cart = [];
+            updateCartUI();
+            toggleCart();
+        }
+
+        function handleContactForm(event) {
+            event.preventDefault();
+            
+            const formData = new FormData(event.target);
+            const name = formData.get('name');
+            const email = formData.get('email');
+            const subject = formData.get('subject');
+            const message = formData.get('message');
+            
+            alert(`Thank you ${name}! Your message about "${subject}" has been received.\n\nWe'll respond to ${email} within 24 hours.`);
+            event.target.reset();
+        }
+
+        // Close cart when clicking overlay
+        document.getElementById('overlay').addEventListener('click', toggleCart);
+
+        // Initialize the website
+        document.addEventListener('DOMContentLoaded', function() {
+            loadContent();
+            updateCartUI();
+        });
+    </script>
+</body>
+</html>
