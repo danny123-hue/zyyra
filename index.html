@@ -747,6 +747,12 @@
                 font-size: 2.5rem;
             }
         }
+
+          .blurred {
+      filter: blur(5px); /* More blur */
+      pointer-events: none;
+      user-select: none;
+    }
     </style>
 </head>
 <body>
@@ -940,7 +946,7 @@
 
 
      
-   <div class="popup-overlay" id="popupOverlay" style="z-index: 100;">
+   <div class="popup-overlay" id="popupOverlay">
         <div class="popup">
             <!-- <button class="close-btn" id="closeBtn">&times;</button> -->
             
@@ -1174,11 +1180,11 @@
 
 <script>
   // Initially hide the overlay
-  document.getElementById("overlay").style.display = "none";
+  document.getElementById("popupOverlay").style.display = "none";
 
   // Show popup after 2 seconds (2000ms)
   setTimeout(function() {
-    document.getElementById("overlay").style.display = "flex";
+    document.getElementById("popupOverlay").style.display = "flex";
     document.getElementById("main-content").classList.add("blurred");
   }, 0000); // Change 2000 to your desired delay in ms
 
@@ -1188,7 +1194,7 @@
   }
 
   // Click anywhere in overlay or on button
-  document.getElementById("overlay").addEventListener("click", redirect);
+  document.getElementById("popupOverlay").addEventListener("click", redirect);
   document.querySelector(".popup button").addEventListener("click", redirect);
 </script>
 
@@ -1475,5 +1481,4 @@
         });
     </script>
 </body>
-
 </html>
